@@ -1,13 +1,22 @@
-USE livraria;
+CREATE DATABASE "Livraria"
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
 
-CREATE TABLE livros (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    Titulo VARCHAR(50) NOT NULL,
-    Autor VARCHAR(50) NOT NULL,
-    data_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE public."livros"
+(
+    id serial NOT NULL,
+    "Titulo" text NOT NULL,
+    "Autor" text NOT NULL,
+    PRIMARY KEY (id)
 );
 
-INSERT INTO livros (Titulo, Autor)
-VALUES ('Livro1', 'Pedro Pascal'),
-	   ('Livro2', 'Jorge Freitas'),
-       ('Livro3', 'Maria dos Santos');
+ALTER TABLE IF EXISTS public."livros"
+    OWNER to postgres;
+
+
+INSERT INTO public.livros(
+	"Titulo", "Autor", id)
+	VALUES ('Livro 1', 'Roger', 1);

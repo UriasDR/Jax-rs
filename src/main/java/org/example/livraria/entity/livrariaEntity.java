@@ -4,14 +4,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "livro")
+@Table(name = "livros")
 public class livrariaEntity implements Serializable {
     @Id
     private Long id;
 
-    @Column
+    @Column(name = "Titulo")
     private String Titulo;
 
+    @Column(name = "Autor")
     private String Autor;
 
     public Long getId() {

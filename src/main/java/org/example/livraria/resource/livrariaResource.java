@@ -1,11 +1,19 @@
 package org.example.livraria.resource;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.example.livraria.entity.livrariaEntity;
 import org.example.livraria.request.livrariaRequest;
 import org.example.livraria.response.livrariaResponse;
 import org.example.livraria.service.livrariaService;
+
+import java.util.List;
 
 @Path("/v1/resource")
 public class livrariaResource {
@@ -17,14 +25,7 @@ public class livrariaResource {
         return Response.ok(new String("Got it!")).build();
     }
 
-    @POST
-    @Path("/livraria")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response post(livrariaRequest livrariaRequest) {
-        String livrosResponse = livrosService.returnLivros(livrariaRequest.getTitulo());
-        return Response.ok(livrosResponse).build();
-    }
+
 
     @POST
     @Path("/livraria/Livros")
@@ -34,13 +35,51 @@ public class livrariaResource {
         livrosService.postLivros(livrariaRequest);
         return Response.ok().build();
     }
-
-    @GET
-    @Path("/livraria/Titulo")
+    @DELETE
+    @Path("/livraria/Livros/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getTitulos() {
-        return Response.ok(livrosService.getTitulos()).build();
+    public Response deleteLivros(@PathParam("id") int id,livrariaRequest livrariaRequest) {
+        livrosService.deleteLivros(id);
+        return Response.ok().build();
+    }
+
+    @PUT
+    @Path("/livraria/Livros/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response putLivros(@PathParam("id") int id,livrariaRequest livroRequest) {
+        livrosService.putLivros(id, livroRequest);
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("/livraria/Livros")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response returnLivros() {
+        List<livrariaEntity> livros = livrosService.returnLivros();
+
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json;
+        try {
+            json = objectMapper.writeValueAsString(livros);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+        return Response.ok(json, MediaType.APPLICATION_JSON).build();
+    }
+
+    @GET
+    @Path("/livraria/Livros/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response returnLivrosByID(@PathParam("id") int id) {
+        livrosService.returnLivrosID(id);
+        return Response.status(Response.Status.fromStatusCode(200)).build();
     }
 
 
@@ -49,7 +88,7 @@ public class livrariaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response livraria() {
         livrariaResponse message = new livrariaResponse();
-        message.setTitulo("Título do Livro");
+        message.setTitulo("Bem-vindo à Livraria X");
         return Response.ok(message).build();
     }
 }
