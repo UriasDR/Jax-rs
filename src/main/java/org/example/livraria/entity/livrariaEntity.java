@@ -20,7 +20,7 @@ public class livrariaEntity implements Serializable {
     }
 
     public void setId(Long id) {
-        this.id = this.id;
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -28,7 +28,7 @@ public class livrariaEntity implements Serializable {
     }
 
     public void setTitulo(String titulo) {
-        Titulo = this.Titulo;
+        this.Titulo = titulo;
     }
 
     public String getAutor() {
@@ -36,6 +36,7 @@ public class livrariaEntity implements Serializable {
     }
 
     public void setAutor(String autor) {
-        Autor = this.Autor;
+        this.Autor = autor;
     }
+
 }

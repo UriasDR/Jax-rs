@@ -20,7 +20,7 @@ public class livrariaService {
 
     public List<livrariaEntity> returnLivros() {
         List<livrariaEntity> livrosList = new ArrayList<>();
-
+        /*
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             String query = "SELECT * FROM public.livros ORDER BY id ASC LIMIT 100";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -42,14 +42,21 @@ public class livrariaService {
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } */
+        livrariaEntity livroEntity = new livrariaEntity();
+        livroEntity.setId((long) 1);
+        livroEntity.setTitulo("Livro 1");
+        livroEntity.setAutor("Autor 1");
+
+        livrosList.add(livroEntity);
+        System.out.println(livrosList);
         return livrosList;
     }
         public List<livrariaEntity> returnLivrosID ( int id){
             List<livrariaEntity> livrosList = new ArrayList<>();
 
             try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-                String query = "SELECT Titulo, Autor FROM livros WHERE id = ?";
+                String query = "SELECT Titulo, Autor FROM public.livros WHERE id = ?";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setInt(1, id);
                 ResultSet resultSet = statement.executeQuery();

@@ -3,5 +3,6 @@ org\example\livraria\SwaggerConfig.class
 org\example\livraria\request\livrariaRequest.class
 org\example\Main.class
 org\example\livraria\response\livrariaResponse.class
+org\example\livraria\entity\databaseConnection.class
 org\example\livraria\entity\livrariaEntity.class
 org\example\livraria\service\livrariaService.class

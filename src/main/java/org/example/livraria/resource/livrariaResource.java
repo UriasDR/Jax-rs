@@ -59,18 +59,8 @@ public class livrariaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response returnLivros() {
         List<livrariaEntity> livros = livrosService.returnLivros();
-
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json;
-        try {
-            json = objectMapper.writeValueAsString(livros);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-
-        return Response.ok(json, MediaType.APPLICATION_JSON).build();
+        System.out.println(livros);
+        return Response.ok(livros, MediaType.APPLICATION_JSON).build();
     }
 
     @GET
@@ -78,8 +68,8 @@ public class livrariaResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response returnLivrosByID(@PathParam("id") int id) {
-        livrosService.returnLivrosID(id);
-        return Response.status(Response.Status.fromStatusCode(200)).build();
+        List<livrariaEntity> livros = livrosService.returnLivros();
+        return Response.ok(livros, MediaType.APPLICATION_JSON).build();
     }
 
 
